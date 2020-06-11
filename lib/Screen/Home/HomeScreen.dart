@@ -1,13 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:instagram_clone_app/Model/user.dart';
 import 'package:instagram_clone_app/Screen/Home/InstaHomeScreen.dart';
 import 'package:instagram_clone_app/Screen/Home/NotificationPage.dart';
 import 'package:instagram_clone_app/Screen/Home/ProfilePage.dart';
 import 'package:instagram_clone_app/Screen/Home/SearchPage.dart';
 import 'package:instagram_clone_app/Screen/Home/UploadPage.dart';
-import 'package:instagram_clone_app/Screen/SignIn/SignInScreen.dart';
+
+final userReference = Firestore.instance.collection("users");
+User currentUser;
+
+final DateTime timeStamp = DateTime.now();
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,11 +21,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  
   FirebaseAuth _auth = FirebaseAuth.instance;
   GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseUser logInUser;
-  int getPageIndex = 0;  
+  int getPageIndex = 0;
 
   PageController pageController;
 
@@ -49,13 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void signOutGoogle() async {
-    await googleSignIn.signOut();
-    print("User Sign Out");
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SignInScreen()));
-  }
 
+  
   whenPageChanges(var pageIndex) {
     setState(() {
       this.getPageIndex = pageIndex;
@@ -86,8 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: getPageIndex,
         onTap: onTabPageChange,
         activeColor: Colors.black,
-        inactiveColor: Colors.indigo,
-        items: [ 
+        inactiveColor: Colors.black54,
+        items: [
           BottomNavigationBarItem(icon: Icon(Icons.home)),
           BottomNavigationBarItem(icon: Icon(Icons.search)),
           BottomNavigationBarItem(icon: Icon(Icons.photo_camera)),

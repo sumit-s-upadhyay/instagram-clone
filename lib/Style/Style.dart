@@ -20,5 +20,11 @@ abstract class ThemeText {
         fontSize: 15.0,        
     );
 
+   static const TextStyle buttonTex =
+      TextStyle(
+        color: Colors.black,   
+        fontSize: 16.0,        
+    );
+
   
 }

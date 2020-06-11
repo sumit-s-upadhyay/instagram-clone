@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone_app/Model/Method.dart';
+
+
+Method _method = Method();
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -13,7 +17,13 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
            mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("ProfilePage"),
+          
+          RaisedButton(
+            onPressed: () {
+              _method.signOutGoogle(context); 
+            },
+            child: Text("Logout"),
+          )
         ],
       )),
     );
