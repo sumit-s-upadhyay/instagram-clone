@@ -8,14 +8,13 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-           mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("SearchPage"),
-        ],
-      )),
-    );
+    return Text('Search Page goes here.');
+  }
+}
+
+class UserResult extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text("User Result here."));
   }
 }

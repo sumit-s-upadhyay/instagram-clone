@@ -8,14 +8,6 @@ class UploadPage extends StatefulWidget {
 class _UploadPageState extends State<UploadPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("UploadPage"),
-        ],
-      )),
-    );
+    return Center(child: Text("Here goes Upload Page."));
   }
 }

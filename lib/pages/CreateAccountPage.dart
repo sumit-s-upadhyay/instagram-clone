@@ -1,13 +1,13 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
-class CreateAccount extends StatefulWidget {
+class CreateAccountPage extends StatefulWidget {
   @override
-  _CreateAccountState createState() => _CreateAccountState();
+  _CreateAccountPageState createState() => _CreateAccountPageState();
 }
 
-class _CreateAccountState extends State<CreateAccount> {
+class _CreateAccountPageState extends State<CreateAccountPage> {
+
   final _scaffoldkey = GlobalKey<ScaffoldState>();
 
   final _formkey = GlobalKey<FormState>();
@@ -15,6 +15,7 @@ class _CreateAccountState extends State<CreateAccount> {
   String userName;
 
   onSumbitUser() {
+    print("Inside onSumbitUser Method");  
     final form = _formkey.currentState;
     if (form.validate()) {
       form.save();
@@ -22,16 +23,17 @@ class _CreateAccountState extends State<CreateAccount> {
       _scaffoldkey.currentState.showSnackBar(snackbar);
 
       Timer(Duration(seconds: 4), () {
-        Navigator.pop(context, userName);
+        print("pop "); 
+        Navigator.pop(context, userName);  
       });
     }
   }
-
+  
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext parentContext) {
     return Scaffold(
         key: _scaffoldkey,
-        appBar: AppBar(
+        appBar: AppBar( 
           title: Text("Profile"),
           automaticallyImplyLeading: false,
         ),
@@ -40,12 +42,17 @@ class _CreateAccountState extends State<CreateAccount> {
             Container(
               child: Column(
                 children: [
+                   SizedBox(
+                    height: 16.0,
+                  ),
+
                   Text("Set UserName"),
                   SizedBox(
                     height: 16.0,
                   ),
                   Container(
                     child: Form(
+                      autovalidate: true, 
                       key: _formkey,
                       child: TextFormField(
                         decoration: InputDecoration(
@@ -54,10 +61,11 @@ class _CreateAccountState extends State<CreateAccount> {
                               borderRadius: BorderRadius.circular(12.0)),
                         ),
                         validator: (value) {
-                          if (value.trim().length > 4 ||
-                              value.trim().isNotEmpty) {
-                            return "Please Enter Correct Username";
+                          print("Value : $value");
+                          if (value.trim().length < 4 ||  value.isEmpty) {
+                            return "Please Enter Correct Username"; 
                           } else {
+                            print("Okkkkk");
                             return null;
                           }
                         },
@@ -69,15 +77,17 @@ class _CreateAccountState extends State<CreateAccount> {
                     height: 16.0,
                   ),
                   RaisedButton(
+                    color: Colors.red, 
                     onPressed: () {
                       onSumbitUser();
                     },
-                    child: Text("data"),
+                    child: Text("Proceeed"),
                   )
                 ],
               ),
             )
           ],
-        ));
+        )
+      );
   }
 }
