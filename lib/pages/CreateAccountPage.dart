@@ -9,13 +9,10 @@ class CreateAccountPage extends StatefulWidget {
 class _CreateAccountPageState extends State<CreateAccountPage> {
 
   final _scaffoldkey = GlobalKey<ScaffoldState>();
-
   final _formkey = GlobalKey<FormState>();
-
   String userName;
 
   onSumbitUser() {
-    print("Inside onSumbitUser Method");  
     final form = _formkey.currentState;
     if (form.validate()) {
       form.save();
@@ -52,8 +49,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   ),
                   Container(
                     child: Form(
+                       key: _formkey,
                       autovalidate: true, 
-                      key: _formkey,
                       child: TextFormField(
                         decoration: InputDecoration(
                           labelText: "Enter UserName",
@@ -61,7 +58,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                               borderRadius: BorderRadius.circular(12.0)),
                         ),
                         validator: (value) {
-                          print("Value : $value");
                           if (value.trim().length < 4 ||  value.isEmpty) {
                             return "Please Enter Correct Username"; 
                           } else {

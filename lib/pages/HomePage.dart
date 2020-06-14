@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:instagram_clone_app/pages/CreateAccountPage.dart';
 import 'package:instagram_clone_app/pages/NotificationsPage.dart';
 import 'package:instagram_clone_app/pages/ProfilePage.dart';
 import 'package:instagram_clone_app/pages/SearchPage.dart';
@@ -45,16 +46,12 @@ class _HomePageState extends State<HomePage> {
       print(googleSignInAccount.email);
       controlSignIn(googleSignInAccount);
     }).catchError((e) {
-      print("Error Message  :" + e); 
+      print("Error Message  :" + e);
     });
   }
 
   loginUser() {
     gSignIn.signIn();
-  }
-
-  signoutUser() {
-    gSignIn.signOut();
   }
 
   controlSignIn(GoogleSignInAccount signInAccount) async {
@@ -75,29 +72,28 @@ class _HomePageState extends State<HomePage> {
 
   saveUserInfotoFirebase() async {
     final GoogleSignInAccount gCurrentUser = gSignIn.currentUser;
-    DocumentSnapshot documentSnapshot =
-        await usersReference.document(gCurrentUser.id).get();
+    DocumentSnapshot documentSnapshot = await usersReference.document(gCurrentUser.id).get();
 
-    if (!documentSnapshot.exists) { 
-      print("data not exists");  
-      // final userName = Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => CreateAccountPage()));
-      //     print("userName :$userName"); 
-      usersReference.document(gCurrentUser.id).setData({ 
+    if (!documentSnapshot.exists) {
+     
+      final userName = await Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccountPage()));
+      print("userName :$userName");
+
+      usersReference.document(gCurrentUser.id).setData({
         'id': gCurrentUser.id,
         'profileName': gCurrentUser.displayName,
-        'userName': gCurrentUser.displayName, 
+        'userName': userName, 
         'url': gCurrentUser.photoUrl,
         'email': gCurrentUser.email,
-        'bio': '',
+        'bio': '', 
         'timeStamp': timeStamp
       });
       documentSnapshot = await usersReference.document(gCurrentUser.id).get();
-       print("documentSnapshot :$documentSnapshot");  
-    } 
-     print("Not exist"); 
+      print("documentSnapshot :$documentSnapshot");
+    }
+    print("Not exist");
     currentUser = User.fromDocument(documentSnapshot);
-  }  
+  }
 
   @override
   void dispose() {
@@ -185,10 +181,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (isSignIn==true) {  
+    if (isSignIn == true) {
       return buildHomeScreen();
     } else {
-      return buildSignInScreen();    
+      return buildSignInScreen();
     }
   }
 }
