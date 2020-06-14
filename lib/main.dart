@@ -13,13 +13,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Instagram Clone',
       debugShowCheckedModeBanner: false,
-      // theme: ThemeData(
-      //   scaffoldBackgroundColor: Colors.black,
-      //   dialogBackgroundColor: Colors.black,
-      //   primarySwatch: Colors.grey,
-      //   cardColor: Colors.white70,
-      //   accentColor: Colors.black,
-      // ),
       home: HomePage(),
     );
   }
