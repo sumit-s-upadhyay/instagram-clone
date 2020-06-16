@@ -4,15 +4,15 @@ class User {
   final String id;
   final String profileName;
   final String userName;
-  final String url;
+  final String photoUrl;
   final String email;
-  final String bio;
+  final String bio; 
 
   User({
     this.id,
     this.profileName,
     this.userName,
-    this.url,
+    this.photoUrl, 
     this.email,
     this.bio,
   });
@@ -22,7 +22,7 @@ class User {
       id: doc.documentID,
       email: doc['email'],
       userName: doc['userName'],
-      url: doc['url'],
+      photoUrl: doc['photoUrl'],
       profileName: doc['profileName'],
       bio: doc['bio'],
     );

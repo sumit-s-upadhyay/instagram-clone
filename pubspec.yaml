@@ -36,10 +36,13 @@ dependencies:
   cached_network_image:
   firebase_auth: ^0.8.3
   geolocator: 5.0.1
-  uuid: ^2.0.0
+  uuid: ^2.1.0
+  cupertino_icons: ^0.1.2
+  path_provider:
   firebase_messaging: ^4.0.0+1
   firebase_storage: ^2.1.0+1
-  google_fonts: ^1.1.0
+  flutter_svg:
+  google_fonts:
 
 dev_dependencies:
   flutter_test:

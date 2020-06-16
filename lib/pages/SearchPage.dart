@@ -1,8 +1,8 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone_app/models/user.dart';
+import 'package:instagram_clone_app/pages/ProfilePage.dart';
 
 final usersReference = Firestore.instance.collection("users");
 
@@ -11,7 +11,8 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMixin<SearchPage> {
+class _SearchPageState extends State<SearchPage>
+    with AutomaticKeepAliveClientMixin<SearchPage> {
   TextEditingController searchTextEditingController;
   Future<QuerySnapshot> futureSearchResults;
 
@@ -47,11 +48,11 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
         .getDocuments();
     setState(() {
       futureSearchResults = allUser;
-    }); 
+    });
   }
 
   emptyTextFormField() {
-    searchTextEditingController.clear(); 
+    searchTextEditingController.clear();
   }
 
   Container displaySearchResultScreen() {
@@ -80,14 +81,13 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
   displayUserFoundScreen() {
     return FutureBuilder(
       future: futureSearchResults,
-      builder: (context, dataSnapshot ) {
+      builder: (context, dataSnapshot) {
         if (!dataSnapshot.hasData) {
           return Center(
-            child: CircularProgressIndicator(
+              child: CircularProgressIndicator(
             backgroundColor: Colors.indigo,
-          )
-         ); 
-        } 
+          ));
+        }
 
         List<UserResult> searchUserResult = [];
         dataSnapshot.data.documents.forEach((document) {
@@ -95,11 +95,8 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
           UserResult userResult = UserResult(eachUser);
 
           searchUserResult.add(userResult);
-
         });
-        return ListView( 
-          children: searchUserResult
-        );
+        return ListView(children: searchUserResult);
       },
     );
   }
@@ -110,18 +107,17 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: searchPageUser(),
-      body: futureSearchResults == null ? displaySearchResultScreen() : displayUserFoundScreen(),
+      body: futureSearchResults == null
+          ? displaySearchResultScreen()
+          : displayUserFoundScreen(),
     );
   }
-
 }
 
 class UserResult extends StatelessWidget {
-
   final User eachUser;
 
   UserResult(this.eachUser);
-
 
   @override
   Widget build(BuildContext context) {
@@ -129,26 +125,29 @@ class UserResult extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap:  () {
-               print("Tapped");
+            onTap: () {
+              //TODO:
+              print("Tapped");
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ProfilePage(userProfileId: eachUser.id)));
             },
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: Colors.white,
-                backgroundImage: CachedNetworkImageProvider(eachUser.url),
+                backgroundImage: CachedNetworkImageProvider(eachUser.photoUrl),
               ),
-              title: Text("${eachUser.profileName}",
-              style: TextStyle(
-                color: Colors.black
+              title: Text(
+                "${eachUser.profileName}",
+                style: TextStyle(color: Colors.black),
               ),
-              ),
-              subtitle: Text("${eachUser.userName}",  
-              style: TextStyle(
-                color: Colors.grey
-              ),
+              subtitle: Text(
+                "${eachUser.userName}",
+                style: TextStyle(color: Colors.grey),
               ),
             ),
-           
           )
         ],
       ),

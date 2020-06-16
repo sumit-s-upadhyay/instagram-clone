@@ -4,7 +4,7 @@ class User {
   final String id;
   final String profileName;
   final String userName;
-  final String url;
+  final String photoUrl;
   final String email;
   final String bio;
 
@@ -12,7 +12,7 @@ class User {
     this.id,
     this.profileName,
     this.userName,
-    this.url,
+    this.photoUrl,
     this.email,
     this.bio
   });
@@ -22,7 +22,7 @@ class User {
      id: documentSnapshot.documentID,
      email: documentSnapshot['email'],
      userName: documentSnapshot['userName'],
-     url: documentSnapshot['photoUrl'],
+     photoUrl: documentSnapshot['photoUrl'],
      profileName: documentSnapshot['displayName'],
      bio: documentSnapshot['bio'],    
    ); 

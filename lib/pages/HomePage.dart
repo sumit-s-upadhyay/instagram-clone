@@ -15,6 +15,7 @@ final GoogleSignIn gSignIn = GoogleSignIn();
 final usersReference = Firestore.instance.collection("users");
 final DateTime timeStamp = DateTime.now();
 User currentUser;
+  final GoogleSignInAccount gCurrentUser = gSignIn.currentUser;
 
 class HomePage extends StatefulWidget {
   @override
@@ -71,7 +72,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   saveUserInfotoFirebase() async {
-    final GoogleSignInAccount gCurrentUser = gSignIn.currentUser;
+  
     DocumentSnapshot documentSnapshot = await usersReference.document(gCurrentUser.id).get();
 
     if (!documentSnapshot.exists) {
@@ -83,7 +84,7 @@ class _HomePageState extends State<HomePage> {
         'id': gCurrentUser.id,
         'profileName': gCurrentUser.displayName,
         'userName': userName, 
-        'url': gCurrentUser.photoUrl,
+        'photoUrl': gCurrentUser.photoUrl,
         'email': gCurrentUser.email,
         'bio': '', 
         'timeStamp': timeStamp
@@ -119,9 +120,9 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           TimeLinePage(),
           SearchPage(),
-          UploadPage(),
+          UploadPage(currentUser, gCurrentUser.photoUrl),  
           NotificationsPage(),
-          ProfilePage(),
+          ProfilePage(userProfileId : gCurrentUser.id), 
         ],
         controller: pageController,
         onPageChanged: whenPageChanges,
