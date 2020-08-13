@@ -1,4 +1,6 @@
-# Instagram Clone
+# Instagram Clone with firebase as backend
+
+# This Project is Under Development
 
 
 
